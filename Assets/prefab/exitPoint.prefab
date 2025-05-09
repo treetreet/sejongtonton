@@ -149,4 +149,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playingAudio: []
   _targetTransform: {fileID: 0}
-  _maxDistance: 3
+  _maxDistance: 5

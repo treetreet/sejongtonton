@@ -73,7 +73,7 @@ namespace Script
             // Canvas 찾기
             if (_canvas == null)
             {
-                _canvas = GameObject.Find("ButtonGroup").GetComponent<Canvas>(); // 씬에서 Canvas를 찾기
+                _canvas = GameObject.Find("Canvas").GetComponent<Canvas>(); // 씬에서 Canvas를 찾기
             }
 
             // Canvas Scaler의 Scale Factor 조정
