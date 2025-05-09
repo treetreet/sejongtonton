@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Script;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,19 +38,10 @@ public class CatScript : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            _playingAudio.Add(SoundManager.Instance.PlaySFX("getcat", transform.position));
-            gameObject.SetActive(false);
-        }
-    }
-    // Update is called once per frame
     void Update()
     {
         _playingAudio.RemoveAll(a => a == null);
-        if (_targetTransform == null)
+        if (_targetTransform.IsUnityNull())
             return;
         float d = Vector3.Distance(transform.position, _targetTransform.position);
 
@@ -67,11 +59,13 @@ public class CatScript : MonoBehaviour
             Debug.Log("asdf");
             if (_playingAudio.Count == 0)
             {
-                float temp = UnityEngine.Random.Range(0, 2f);
-                if (temp > 1)
-                    _playingAudio.Add(SoundManager.Instance.PlaySFX("cat1", transform.position));
-                else
-                    _playingAudio.Add(SoundManager.Instance.PlaySFX("cat2", transform.position));
+                int temp = UnityEngine.Random.Range(0, 2);
+                string clipName = temp switch
+                {
+                    0 => "cat1",
+                    1 => "cat2"
+                };
+                _playingAudio.Add(SoundManager.Instance.PlaySFX(clipName, transform.position));
             }
         }
     }

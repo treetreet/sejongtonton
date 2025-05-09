@@ -1,49 +1,68 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using Script;
 using UnityEngine;
 
-public class LavaScript : MonoBehaviour
+namespace Script
 {
-    [SerializeField] List<AudioSource> _playingAudio;
-    [SerializeField] Transform _targetTransform;
-    [SerializeField] float _maxDistance;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class LavaScript : MonoBehaviour
     {
-    }
-    void CheckOverlap()
-    {
-        Collider2D hit = Physics2D.OverlapPoint(transform.position);
-        if (!hit.IsUnityNull() && hit.CompareTag("Player"))
+        [SerializeField] List<AudioSource> playingAudio;
+        [SerializeField] Transform targetTransform;
+        [SerializeField] float maxDistance;
+
+        private GameManager _gameManager;
+        private Transform _playerTransform;
+
+        void CheckOverlap()
         {
-            Debug.Log("Dead");
+            if(transform.position == _playerTransform.position)
+            {
+                Debug.Log("Lava");
+                _gameManager.GameOver();
+            }
         }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        StartCoroutine(playSFX());
-
-        CheckOverlap();
-        _playingAudio.RemoveAll(a => a == null);
-        if (_targetTransform == null)
-            return;
-        float d = Vector3.Distance(transform.position, _targetTransform.position);
-
-        foreach (AudioSource i in _playingAudio)
+        
+        private void OnEnable()
         {
-            i.volume = MathF.Max(0f, (_maxDistance - d) / (_maxDistance - 1));
+            PlayerCtrl.OnPlayerMove += CheckOverlap;
         }
-    }
 
-    IEnumerator playSFX()
-    {
-        if (_playingAudio.Count == 0)
-        { 
-            _playingAudio.Add(SoundManager.Instance.PlaySFX("lava_flow", transform.position));
+        private void OnDisable()
+        {
+            PlayerCtrl.OnPlayerMove -= CheckOverlap;
         }
-        yield return null;
+
+        void Start()
+        {
+            _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
+
+        void Update()
+        {
+            StartCoroutine(playSFX());
+
+            playingAudio.RemoveAll(a => a == null);
+            if (targetTransform == null)
+                return;
+            float d = Vector3.Distance(transform.position, targetTransform.position);
+
+            foreach (AudioSource i in playingAudio)
+            {
+                i.volume = MathF.Max(0f, (maxDistance - d) / (maxDistance - 1));
+            }
+        }
+
+        IEnumerator playSFX()
+        {
+            if (playingAudio.Count == 0)
+            {
+                playingAudio.Add(SoundManager.Instance.PlaySFX("lava_flow", transform.position));
+            }
+
+            yield return null;
+        }
     }
 }

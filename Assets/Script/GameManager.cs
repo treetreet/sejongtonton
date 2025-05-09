@@ -7,11 +7,12 @@ namespace Script
     public class GameManager : MonoBehaviour
     {
         private readonly List<GameObject> _cats = new List<GameObject>();
-        [SerializeField] List<int> _scaleOrder = new List<int>();
+        [SerializeField] List<int> scaleOrder = new List<int>();
 
-        [SerializeField] private Canvas canvas;
+        [SerializeField] private GameObject clearPanel;
+        [SerializeField] private GameObject gameoverPanel;
         [SerializeField] List<int> correctScaleOrder;
-
+        private PlayerCtrl _player;
         private void Start()
         {
             Transform catGroup = GameObject.Find("CatGroup")?.transform;
@@ -22,10 +23,13 @@ namespace Script
                     _cats.Add(child.gameObject);
                 }
             }
-            canvas.gameObject.SetActive(false);
+            clearPanel.SetActive(false);
+            gameoverPanel.SetActive(false);
+            
+            _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
         }
 
-        public bool AreAllCatsFound()
+        private bool AreAllCatsFound()
         {
             foreach (GameObject cat in _cats)
             {
@@ -35,33 +39,42 @@ namespace Script
             return true;
         }
 
-        public bool AreScaleOrderCorrect()
+        private bool AreScaleOrderCorrect()
         {
             if(correctScaleOrder.Count == 0)
                 return true;
-            if (correctScaleOrder.Count > _scaleOrder.Count)
+            if (correctScaleOrder.Count > scaleOrder.Count)
                 return false;
             for (int i = 0; i < correctScaleOrder.Count; i++)
-                if (correctScaleOrder[i] != _scaleOrder[i])
+                if (correctScaleOrder[i] != scaleOrder[i])
                     return false;
             
             return true;
         }
 
-        public void AddScaleOrder(int _in)
+        public void AddScaleOrder(int @in)
         {
-            _scaleOrder.Add(_in);
+            scaleOrder.Add(@in);
         }
         public bool StageClear()
         {
             if (AreAllCatsFound() && AreScaleOrderCorrect())
             {
-                if (canvas.IsUnityNull()) Debug.LogError("canvas is null");
-                else canvas.gameObject.SetActive(true);
+                if (clearPanel.IsUnityNull()) Debug.LogError("clearPanel is null");
+                else clearPanel.SetActive(true);
+                _player.enabled = false;
                 KeyboardButtonSelector.Instance.RefreshButtons();
                 return true;
             }
             return false;
+        }
+
+        public void GameOver()
+        {
+            if (gameoverPanel.IsUnityNull()) Debug.LogError("gameoverPanel is null");
+            _player.enabled = false;
+            gameoverPanel.SetActive(true);
+            KeyboardButtonSelector.Instance.RefreshButtons();
         }
     }
 }

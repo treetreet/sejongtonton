@@ -132,7 +132,7 @@ namespace Script
             OnPlayerMove?.Invoke();
         }
 
-        public Vector3 getPosition()
+        public Vector3 GetPosition()
         {
             return transform.position;
         }
@@ -142,6 +142,7 @@ namespace Script
             StartCoroutine(PlayerCanMove());
             transform.position = blockedTilemap.GetCellCenterWorld(targetCellPos);
             SoundManager.Instance.PlaySFX("walking");
+            PlayerMoveEnd();
             yield return null;
         }
 
@@ -149,7 +150,6 @@ namespace Script
         {
             _canMove = false;
             yield return new WaitForSeconds(0.3f);
-            PlayerMoveEnd();
             _canMove = true;
         }
         IEnumerator PlayerRotate(float input)
