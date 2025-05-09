@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Script
 {
@@ -8,7 +9,9 @@ namespace Script
         private static GameManager _instance;
         public static GameManager Instance => _instance;
         private readonly List<GameObject> _cats = new List<GameObject>();
-
+    
+        [SerializeField] private Canvas canvas;
+        
         private void Awake()
         {
             if (_instance != null && _instance != this)
@@ -41,6 +44,11 @@ namespace Script
             }
 
             return true;
+        }
+
+        public void StageClear()
+        {
+            canvas.gameObject.SetActive(true);
         }
     }
 }
