@@ -2893,8 +2893,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleOrder: 
-  clearPanel: {fileID: 0}
-  gameoverPanel: {fileID: 0}
+  clearPanel: {fileID: 320317433}
+  gameoverPanel: {fileID: 1294169806}
   correctScaleOrder: 
 --- !u!4 &1749835215
 Transform:
