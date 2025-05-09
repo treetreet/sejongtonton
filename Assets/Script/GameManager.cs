@@ -78,6 +78,7 @@ namespace Script
                 if (clearPanel.IsUnityNull()) Debug.LogError("clearPanel is null");
                 else clearPanel.SetActive(true);
                 KeyboardButtonSelector.Instance.RefreshButtons();
+                _soundmanager.PlaySFX("clear");
                 return true;
             }
             return false;
