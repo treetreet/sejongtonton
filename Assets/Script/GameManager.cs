@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Script
 {
     public class GameManager : MonoBehaviour
     {
+        public InputSystem_Actions inputSystem;
+        InputAction _restartAction;
         private readonly List<GameObject> _cats = new List<GameObject>();
         [SerializeField] List<int> scaleOrder = new List<int>();
 
@@ -15,6 +19,9 @@ namespace Script
         private PlayerCtrl _player;
         private void Start()
         {
+            inputSystem = new InputSystem_Actions();
+            inputSystem.Enable();
+            _restartAction = inputSystem.Player.Restart;
             Transform catGroup = GameObject.Find("CatGroup")?.transform;
             if (catGroup != null)
             {
@@ -77,6 +84,12 @@ namespace Script
             _player.enabled = false;
             gameoverPanel.SetActive(true);
             KeyboardButtonSelector.Instance.RefreshButtons();
+        }
+
+        private void Update()
+        {
+            if(_restartAction.triggered)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
