@@ -10,12 +10,16 @@ namespace Script
 {
     public class PlayerCtrl : MonoBehaviour
     {
+        public delegate void PlayerMoveHandler();
+        public static event PlayerMoveHandler OnPlayerMove;
+        
+        
         InputSystem_Actions _inputSystemActions;
         InputAction _moveAction;
         InputAction _lookAction;
         
         [SerializeField] private Tilemap blockedTilemap;
-        [SerializeField] private float distance = 1f;
+        [SerializeField] private float distance = 0.5f;
         [SerializeField] private GameManager gameManager;
         bool _canMove = true;
         bool _canRotate = true;
@@ -92,7 +96,8 @@ namespace Script
         {
             Vector2 direction = GetDirection(input);  // 플레이어가 바라보는 방향
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
+            Vector2 rayOrigin = (Vector2)transform.position + direction.normalized * 0.3f;
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, distance);
             
             if (!hit.collider.IsUnityNull() && hit.collider.CompareTag("exitPoint"))
             {
@@ -130,6 +135,16 @@ namespace Script
             return direction;
         }
 
+        private void PlayerMoveEnd()
+        {
+            OnPlayerMove?.Invoke();
+        }
+
+        public Vector3 getPosition()
+        {
+            return transform.position;
+        }
+
         IEnumerator PlayerMove(Vector3Int targetCellPos)
         {
             StartCoroutine(PlayerCanMove());
@@ -142,6 +157,7 @@ namespace Script
         {
             _canMove = false;
             yield return new WaitForSeconds(0.3f);
+            PlayerMoveEnd();
             _canMove = true;
         }
         IEnumerator PlayerRotate(float input)
@@ -161,11 +177,12 @@ namespace Script
             _canRotate = true;
         }
         
+        /*
         void OnDrawGizmos()
         {
-            // Gizmos를 사용하여 Ray를 게임 뷰에서 확인
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(transform.position, transform.up * distance);
+            Gizmos.DrawRay(transform.position, GetDirection(_moveAction.ReadValue<Vector2>()) * distance);
         }
+        */
     }
 }

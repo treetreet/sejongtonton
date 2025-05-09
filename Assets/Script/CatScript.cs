@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Script;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,15 +10,36 @@ public class CatScript : MonoBehaviour
     [SerializeField] List<AudioSource> _playingAudio;
     [SerializeField] Transform _targetTransform;
     [SerializeField] float _maxDistance;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
+    private Transform _playerTransform;
     void Start()
     {
         StartCoroutine(playSFX());
+        _playerTransform  = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    void CheckOverlap()
+
+    private void OnEnable()
     {
-        Collider2D hit = Physics2D.OverlapPoint(transform.position);
-        if (!hit.IsUnityNull() && hit.CompareTag("Player"))
+        PlayerCtrl.OnPlayerMove += CheckOverlap;
+    }
+
+    private void OnDisable()
+    {
+        PlayerCtrl.OnPlayerMove -= CheckOverlap;
+    }
+
+    private void CheckOverlap()
+    {
+        if (transform.position == _playerTransform.position)
+        {
+            _playingAudio.Add(SoundManager.Instance.PlaySFX("getcat", transform.position));
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
         {
             _playingAudio.Add(SoundManager.Instance.PlaySFX("getcat", transform.position));
             gameObject.SetActive(false);
@@ -26,8 +48,6 @@ public class CatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        CheckOverlap();
         _playingAudio.RemoveAll(a => a == null);
         if (_targetTransform == null)
             return;

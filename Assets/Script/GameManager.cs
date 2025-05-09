@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Script
@@ -7,7 +8,7 @@ namespace Script
     {
         private readonly List<GameObject> _cats = new List<GameObject>();
     
-        private Canvas canvas;
+        [SerializeField] private Canvas canvas;
         
 
         private void Start()
@@ -20,8 +21,6 @@ namespace Script
                     _cats.Add(child.gameObject);
                 }
             }
-            
-            canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
             canvas.gameObject.SetActive(false);
         }
 
@@ -29,6 +28,7 @@ namespace Script
         {
             foreach (GameObject cat in _cats)
             {
+                Debug.Log("NotFindAllCat");
                 if (cat.activeInHierarchy) return false;
             }
 
@@ -37,7 +37,8 @@ namespace Script
 
         public void StageClear()
         {
-            canvas.gameObject.SetActive(true);
+            if(canvas.IsUnityNull()) Debug.LogError("canvas is null");
+            else canvas.gameObject.SetActive(true);
             KeyboardButtonSelector.Instance.RefreshButtons();
         }
     }
