@@ -77,7 +77,6 @@ namespace Script
             {
                 if (clearPanel.IsUnityNull()) Debug.LogError("clearPanel is null");
                 else clearPanel.SetActive(true);
-                _player.enabled = false;
                 KeyboardButtonSelector.Instance.RefreshButtons();
                 return true;
             }
@@ -106,6 +105,15 @@ namespace Script
                 yield return new WaitForSeconds(0.5f);
                 Debug.Log(_in);
                 _soundmanager.PlayScale(_in);
+            }
+        }
+        
+        private void OnDestroy()
+        {
+            if (inputSystem != null)
+            {
+                inputSystem.Disable();
+                inputSystem.Dispose();
             }
         }
     }

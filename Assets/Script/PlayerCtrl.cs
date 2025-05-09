@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace Script
         [SerializeField] private GameManager gameManager;
         bool _canMove = true;
         bool _canRotate = true;
+
         void Start()
         {
             _inputSystemActions = new InputSystem_Actions();
