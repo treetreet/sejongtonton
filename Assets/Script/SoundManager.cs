@@ -35,15 +35,23 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(string name)
+    public AudioSource PlaySFX(string name, float volume = 1f)
     {
         if (sfxClips.TryGetValue(name, out AudioClip clip))
         {
-            sfxSource.PlayOneShot(clip);
+            GameObject tempGO = new GameObject("SFX_" + name);
+            AudioSource tempSource = tempGO.AddComponent<AudioSource>();
+            tempSource.clip = clip;
+            tempSource.volume = volume;
+            tempSource.Play();
+
+            Destroy(tempGO, clip.length); // 자동 제거
+            return tempSource;
         }
         else
         {
             Debug.LogWarning($"SFX '{name}' not found.");
+            return null;
         }
     }
 
@@ -61,4 +69,5 @@ public class SoundManager : MonoBehaviour
             yield return new WaitForSeconds(clip.length);
         }
     }
+
 }
