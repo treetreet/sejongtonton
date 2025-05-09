@@ -3312,7 +3312,7 @@ MonoBehaviour:
   scaleOrder: 
   clearPanel: {fileID: 151459846}
   gameoverPanel: {fileID: 184790031}
-  correctScaleOrder: 000000000100000002000000
+  correctScaleOrder: 0500000003000000020000000000000004000000
 --- !u!4 &1749835215
 Transform:
   m_ObjectHideFlags: 0

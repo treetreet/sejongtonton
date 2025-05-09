@@ -22,7 +22,6 @@ public class ScaleScript : MonoBehaviour
         {
             if (!_isOn)
             {
-                string temp = null;
                 string[] notes = { "do", "re", "mi", "fa", "sol", "la", "si" };
                 if (scale >= 0 && scale < notes.Length)
                 {

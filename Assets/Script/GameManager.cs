@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,12 +18,15 @@ namespace Script
         [SerializeField] private GameObject gameoverPanel;
         [SerializeField] List<int> correctScaleOrder;
         private PlayerCtrl _player;
+        private SoundManager _soundmanager;
         private void Start()
         {
             inputSystem = new InputSystem_Actions();
             inputSystem.Enable();
             _restartAction = inputSystem.Player.Restart;
             Transform catGroup = GameObject.Find("CatGroup")?.transform;
+
+            _soundmanager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
             if (catGroup != null)
             {
                 foreach (Transform child in catGroup)
@@ -34,6 +38,8 @@ namespace Script
             gameoverPanel.SetActive(false);
             
             _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
+
+            StartCoroutine(PlayCorrectScale());
         }
 
         private bool AreAllCatsFound()
@@ -83,6 +89,7 @@ namespace Script
             if (gameoverPanel.IsUnityNull()) Debug.LogError("gameoverPanel is null");
             _player.enabled = false;
             gameoverPanel.SetActive(true);
+            _soundmanager.PlaySFX("deadandrestart");
             KeyboardButtonSelector.Instance.RefreshButtons();
         }
 
@@ -90,6 +97,16 @@ namespace Script
         {
             if(_restartAction.triggered)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        IEnumerator PlayCorrectScale()
+        {
+            foreach(int _in in correctScaleOrder)
+            {
+                yield return new WaitForSeconds(0.5f);
+                Debug.Log(_in);
+                _soundmanager.PlayScale(_in);
+            }
         }
     }
 }
