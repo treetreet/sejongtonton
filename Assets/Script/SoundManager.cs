@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,10 +47,10 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySFXCoroutine(string name)
+    public Coroutine PlaySFXCoroutine(string name)
     {
 
-        StartCoroutine(PlaySFXRoutine(name));
+        return StartCoroutine(PlaySFXRoutine(name));
     }
 
     private IEnumerator PlaySFXRoutine(string name)

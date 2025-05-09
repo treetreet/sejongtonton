@@ -13,12 +13,11 @@ namespace Script
         InputSystem_Actions _inputSystemActions;
         InputAction _moveAction;
         InputAction _lookAction;
-
+        
         [SerializeField] private Tilemap blockedTilemap;
         [SerializeField] private float distance = 1f;
         bool _canMove = true;
         bool _canRotate = true;
-
         void Start()
         {
             _inputSystemActions = new InputSystem_Actions();
@@ -62,6 +61,8 @@ namespace Script
                 if (blockedTilemap.HasTile(targetCellPos))
                 {
                     CheckRayCast(input);
+                    SoundManager.Instance.PlaySFX("hit");
+                    StartCoroutine(PlayerCanMove());
                     Debug.Log("이동 불가! 장애물 있음");
                 }
                 else
@@ -83,9 +84,12 @@ namespace Script
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
             
-            if (!hit.collider.IsUnityNull() && hit.collider.CompareTag("exitPoint") && GameManager.Instance.AreAllCatsFound())
+            if (!hit.collider.IsUnityNull() && hit.collider.CompareTag("exitPoint"))
             {
-                Debug.Log("clear");
+                if (GameManager.Instance.AreAllCatsFound())
+                    Debug.Log("clear");
+                else
+                    SoundManager.Instance.PlaySFX("hit");
             }
         }
 
@@ -113,14 +117,18 @@ namespace Script
 
         IEnumerator PlayerMove(Vector3Int targetCellPos)
         {
-            _canMove = false;
-
+            StartCoroutine(PlayerCanMove());
             transform.position = blockedTilemap.GetCellCenterWorld(targetCellPos);
+            SoundManager.Instance.PlaySFX("walking");
+            yield return null;
+        }
 
+        IEnumerator PlayerCanMove()
+        {
+            _canMove = false;
             yield return new WaitForSeconds(0.3f);
             _canMove = true;
         }
-
         IEnumerator PlayerRotate(float input)
         {
             _canRotate = false;
