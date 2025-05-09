@@ -1909,7 +1909,7 @@ GameObject:
   - component: {fileID: 1240882608}
   - component: {fileID: 1240882607}
   m_Layer: 5
-  m_Name: Level 2 Button
+  m_Name: Main Menu Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2667,7 +2667,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Next Level
+  m_text: Go Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2916,7 +2916,7 @@ MonoBehaviour:
   scaleOrder: 
   clearPanel: {fileID: 151459846}
   gameoverPanel: {fileID: 184790031}
-  correctScaleOrder: 0500000003000000020000000000000004000000
+  correctScaleOrder: 050000000300000002000000000000000400000002000000
 --- !u!4 &1749835215
 Transform:
   m_ObjectHideFlags: 0

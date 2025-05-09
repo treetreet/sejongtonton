@@ -64,11 +64,11 @@ namespace Script
             if (_buttons.Count == 0) return;
             
             // 방향키로 버튼 이동
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             {
                 _selectedButtonIndex = (_selectedButtonIndex - 1 + _buttons.Count) % _buttons.Count;
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
             {
                 _selectedButtonIndex = (_selectedButtonIndex + 1) % _buttons.Count;
             }
