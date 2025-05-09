@@ -79,6 +79,7 @@ namespace Script
                 else clearPanel.SetActive(true);
                 _player.enabled = false;
                 KeyboardButtonSelector.Instance.RefreshButtons();
+                _soundmanager.PlaySFX("clear");
                 return true;
             }
             return false;
