@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - exitPoint
+  - block
   layers:
   - Default
   - TransparentFX
