@@ -1,106 +1,148 @@
 using System.Collections;
-using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-public class PlayerCtrl : MonoBehaviour
+namespace Script
 {
-    InputSystem_Actions inputsystem;
-    InputAction moveAction;
-    InputAction lookAction;
-
-    [SerializeField] Tilemap blockedTilemap;
-    bool canMove = true;
-    bool canRotate = true;
-    void Start()
+    public class PlayerCtrl : MonoBehaviour
     {
-        inputsystem = new InputSystem_Actions();
-        inputsystem.Enable();
-        moveAction = inputsystem.Player.Move;
-        lookAction = inputsystem.Player.Look;
-    }
+        InputSystem_Actions _inputSystemActions;
+        InputAction _moveAction;
+        InputAction _lookAction;
 
-    void Update()
-    {
-        if (!canMove) return;
-        if (!canRotate) return;
+        [SerializeField] private Tilemap blockedTilemap;
+        [SerializeField] private float distance = 1f;
+        bool _canMove = true;
+        bool _canRotate = true;
 
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        if (input != Vector2.zero)
+        void Start()
         {
-            Vector3 targetWorldPos = transform.position;
+            _inputSystemActions = new InputSystem_Actions();
+            _inputSystemActions.Enable();
+            _moveAction = _inputSystemActions.Player.Move;
+            _lookAction = _inputSystemActions.Player.Look;
+        }
 
-            if (input.y == 1)
+        void Update()
+        {
+            if (!_canMove) return;
+            if (!_canRotate) return;
+
+            Vector2 input = _moveAction.ReadValue<Vector2>();
+            if (input != Vector2.zero)
             {
-                targetWorldPos += transform.up;
+                Vector3 targetWorldPos = transform.position;
+
+                if (input.y != 0)
+                {
+                    targetWorldPos += transform.up * input.y;
+                }
+                else if (input.x != 0)
+                {
+                    Vector3 vec = Vector3.zero;
+
+                    if (Mathf.Approximately(transform.up.y, 1f))
+                        vec = Vector3.left;
+                    else if (Mathf.Approximately(transform.up.x, -1f))
+                        vec = Vector3.down;
+                    else if (Mathf.Approximately(transform.up.y, -1f))
+                        vec = Vector3.right;
+                    else if (Mathf.Approximately(transform.up.x, 1f))
+                        vec = Vector3.up;
+
+                    targetWorldPos += vec * -input.x; // 방향 반대로 보정
+                }
+
+                Vector3Int targetCellPos = blockedTilemap.WorldToCell(targetWorldPos);
+
+                if (blockedTilemap.HasTile(targetCellPos))
+                {
+                    CheckRayCast(input);
+                    Debug.Log("이동 불가! 장애물 있음");
+                }
+                else
+                {
+                    StartCoroutine(PlayerMove(targetCellPos));
+                }
             }
-            else if (input.y == -1)
-            {
-                targetWorldPos -= transform.up;
-            }
-            else if (input.x != 0)
-            {
-                Vector3 vec = Vector3.zero;
 
-                if (Mathf.Approximately(transform.up.y, 1f))
-                    vec = Vector3.left;
-                else if (Mathf.Approximately(transform.up.x, -1f))
-                    vec = Vector3.down;
-                else if (Mathf.Approximately(transform.up.y, -1f))
-                    vec = Vector3.right;
-                else if (Mathf.Approximately(transform.up.x, 1f))
-                    vec = Vector3.up;
-
-                targetWorldPos += vec * -input.x;  // 방향 반대로 보정
-            }
-
-            Vector3Int targetCellPos = blockedTilemap.WorldToCell(targetWorldPos);
-
-            if (blockedTilemap.HasTile(targetCellPos))
+            float lookDirection = _lookAction.ReadValue<float>();
+            if (lookDirection != 0)
             {
-                Debug.Log("이동 불가! 장애물 있음");
-            }
-            else
-            {
-                StartCoroutine(PlayerMove(targetCellPos));
+                StartCoroutine(PlayerRotate(lookDirection));
             }
         }
 
-        float lookinput = lookAction.ReadValue<float>();
-        if (lookinput != 0)
+        void CheckRayCast(Vector2 input)
         {
-            StartCoroutine(PlayerRotate(lookinput));
-        }
-    }
+            Vector2 direction = GetDirection(input);  // 플레이어가 바라보는 방향
 
-    IEnumerator PlayerMove(Vector3Int targetCellPos)
-    {
-        canMove = false;
-
-        transform.position = blockedTilemap.GetCellCenterWorld(targetCellPos);
-
-        yield return new WaitForSeconds(0.3f);
-        canMove = true;
-    }
-
-    IEnumerator PlayerRotate(float input)
-    {
-        canRotate = false;
-        Vector3 rotateStart = transform.eulerAngles;
-        float rotationtimer = 0f;
-        while (rotationtimer <= 0.25f)
-        {
-            rotationtimer += Time.deltaTime;
-            transform.eulerAngles = Vector3.Lerp(rotateStart, rotateStart + new Vector3(0, 0, input * -90f), rotationtimer * 4f);
-            yield return new WaitForEndOfFrame();
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
+            
+            if (!hit.collider.IsUnityNull() && hit.collider.CompareTag("exitPoint") && GameManager.Instance.AreAllCatsFound())
+            {
+                Debug.Log("clear");
+            }
         }
 
-        yield return new WaitForSeconds(0.25f);
-        canRotate = true;
+        Vector2 GetDirection(Vector2 input)
+        {
+            Vector2 direction = Vector2.zero;
+            if (input.y > 0)
+            {
+                direction = transform.up;  // 위쪽
+            }
+            else if (input.y < 0)
+            {
+                direction = -transform.up; // 아래쪽
+            }
+            else if (input.x > 0)
+            {
+                direction = transform.right;  // 오른쪽
+            }
+            else if (input.x < 0)
+            {
+                direction = -transform.right; // 왼쪽
+            }
+            return direction;
+        }
+
+        IEnumerator PlayerMove(Vector3Int targetCellPos)
+        {
+            _canMove = false;
+
+            transform.position = blockedTilemap.GetCellCenterWorld(targetCellPos);
+
+            yield return new WaitForSeconds(0.3f);
+            _canMove = true;
+        }
+
+        IEnumerator PlayerRotate(float input)
+        {
+            _canRotate = false;
+            Vector3 rotateStart = transform.eulerAngles;
+            float rotationTimer = 0f;
+            while (rotationTimer <= 0.25f)
+            {
+                rotationTimer += Time.deltaTime;
+                transform.eulerAngles = Vector3.Lerp(rotateStart, rotateStart + new Vector3(0, 0, input * -90f),
+                    rotationTimer * 4f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            yield return new WaitForSeconds(0.25f);
+            _canRotate = true;
+        }
+        
+        void OnDrawGizmos()
+        {
+            // Gizmos를 사용하여 Ray를 게임 뷰에서 확인
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(transform.position, transform.up * distance);
+        }
     }
 }
-
