@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -9,9 +10,11 @@ using Vector3 = UnityEngine.Vector3;
 public class PlayerCtrl : MonoBehaviour
 {
     InputSystem_Actions inputsystem;
-    InputAction moveAction; // (-1, 0) a (1, 0) d (0, 1) w (0, -1) s
-    InputAction lookAction; //-1 q, 1 e
+    InputAction moveAction;
+    InputAction lookAction;
+
     [SerializeField] Tilemap blockedTilemap;
+    bool canMove = true;
 
     void Start()
     {
@@ -23,18 +26,36 @@ public class PlayerCtrl : MonoBehaviour
 
     void Update()
     {
-        Vector3 targetWorldPos = transform.position + (Vector3)moveAction.ReadValue<Vector2>();
-        Vector3Int targetCellPos = blockedTilemap.WorldToCell(targetWorldPos);
-        if (blockedTilemap.HasTile(targetCellPos))
-        {
-            Debug.Log("이동 불가! 장애물 있음");
-        }
-        else 
-        {
-            transform.position += new Vector3(targetCellPos.x, targetCellPos.y, transform.position.z);
-        }
+        if (!canMove) return;
 
-        Debug.Log(moveAction.ReadValue<Vector2>());
-        Debug.Log(lookAction.ReadValueAsObject());
+        Vector2 input = moveAction.ReadValue<Vector2>();
+        if (input != Vector2.zero)
+        {
+            Vector3 targetWorldPos = transform.position + (Vector3)input;
+            Vector3Int targetCellPos = blockedTilemap.WorldToCell(targetWorldPos);
+
+            if (blockedTilemap.HasTile(targetCellPos))
+            {
+                Debug.Log("이동 불가! 장애물 있음");
+            }
+            else
+            {
+                StartCoroutine(PlayerMove(targetCellPos));
+            }
+
+            Debug.Log(input);
+            Debug.Log(lookAction.ReadValueAsObject());
+        }
+    }
+
+    IEnumerator PlayerMove(Vector3Int targetCellPos)
+    {
+        canMove = false;
+
+        transform.position = blockedTilemap.GetCellCenterWorld(targetCellPos);
+
+        yield return new WaitForSeconds(0.3f);
+        canMove = true;
     }
 }
+

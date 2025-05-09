@@ -588,7 +588,6 @@ GameObject:
   - component: {fileID: 1820089056}
   - component: {fileID: 1820089059}
   - component: {fileID: 1820089058}
-  - component: {fileID: 1820089057}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -611,44 +610,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 912532594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!19719996 &1820089057
-TilemapCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1820089055}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
 --- !u!483693784 &1820089058
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -896,6 +857,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3737070746171367816, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737070746171367816, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737070746171367816, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -913,7 +882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5494127441690668276, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: -3.5
       objectReference: {fileID: 0}
     - target: {fileID: 5494127441690668276, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -975,12 +944,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3737070746171367816, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
+    - {fileID: 4774598050677470725, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4841863702643771612, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
-      insertIndex: 2
+      insertIndex: -1
       addedObject: {fileID: 9145876698434948686}
   m_SourcePrefab: {fileID: 100100000, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
 --- !u!1 &7146778795482884157 stripped
