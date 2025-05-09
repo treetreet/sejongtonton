@@ -31,7 +31,7 @@ public class SFXDistanceTestScript : MonoBehaviour
     IEnumerator playSFX()
     {
         if(_playingAudio.Count == 0)
-            _playingAudio.Add(SoundManager.Instance.PlaySFX("air"));
+            _playingAudio.Add(SoundManager.Instance.PlaySFX("air", transform.position));
         yield return null;
     }
 }

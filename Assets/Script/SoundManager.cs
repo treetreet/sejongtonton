@@ -10,7 +10,6 @@ public class SoundManager : MonoBehaviour
     public AudioSource sfxSource;
 
     private Dictionary<string, AudioClip> sfxClips = new Dictionary<string, AudioClip>();
-
     void Awake()
     {
         if (Instance == null)
@@ -43,6 +42,27 @@ public class SoundManager : MonoBehaviour
             AudioSource tempSource = tempGO.AddComponent<AudioSource>();
             tempSource.clip = clip;
             tempSource.volume = volume;
+            tempSource.Play();
+
+            Destroy(tempGO, clip.length); // 자동 제거
+            return tempSource;
+        }
+        else
+        {
+            Debug.LogWarning($"SFX '{name}' not found.");
+            return null;
+        }
+    }
+    public AudioSource PlaySFX(string name,Vector3 pos, float volume = 1f)
+    {
+        if (sfxClips.TryGetValue(name, out AudioClip clip))
+        {
+            GameObject tempGO = new GameObject("SFX_" + name);
+            tempGO.transform.position = pos;
+            AudioSource tempSource = tempGO.AddComponent<AudioSource>();
+            tempSource.clip = clip;
+            tempSource.volume = volume;
+            tempSource.spatialBlend = 1f;
             tempSource.Play();
 
             Destroy(tempGO, clip.length); // 자동 제거

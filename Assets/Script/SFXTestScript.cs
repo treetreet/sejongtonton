@@ -21,7 +21,7 @@ public class SFXTestScript : MonoBehaviour
     IEnumerator playSFX()
     {
         play = false;
-        SoundManager.Instance.PlaySFX("air");
+        SoundManager.Instance.PlaySFX("cat1", transform.position);
         yield return new WaitForSeconds(1f);
         play = true;
     }

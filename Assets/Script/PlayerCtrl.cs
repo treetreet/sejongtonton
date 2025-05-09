@@ -93,7 +93,7 @@ namespace Script
                 }
                 else
                 {
-                    SoundManager.Instance.PlaySFX("hit");
+                    SoundManager.Instance.PlaySFX("hit", transform.position);
                 }
             }
         }
