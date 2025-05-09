@@ -93,20 +93,18 @@ public class SoundManager : MonoBehaviour
             return null;
         }
     }
-
-    public Coroutine PlaySFXCoroutine(string name)
+    public void PlayScale(int _num)
     {
 
-        return StartCoroutine(PlaySFXRoutine(name));
-    }
-
-    private IEnumerator PlaySFXRoutine(string name)
-    {
-        if (sfxClips.TryGetValue(name, out AudioClip clip))
+        string[] notes = { "do", "re", "mi", "fa", "sol", "la", "si" };
+        string note;
+        if (_num >= 0 && _num < notes.Length)
         {
-            sfxSource.PlayOneShot(clip);
-            yield return new WaitForSeconds(clip.length);
+            note = notes[_num];
         }
+        else
+            return;
+        PlaySFX(note);
+        return;
     }
-
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,6 +38,8 @@ namespace Script
             gameoverPanel.SetActive(false);
             
             _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
+
+            StartCoroutine(PlayCorrectScale());
         }
 
         private bool AreAllCatsFound()
@@ -94,6 +97,16 @@ namespace Script
         {
             if(_restartAction.triggered)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        IEnumerator PlayCorrectScale()
+        {
+            foreach(int _in in correctScaleOrder)
+            {
+                yield return new WaitForSeconds(0.5f);
+                Debug.Log(_in);
+                _soundmanager.PlayScale(_in);
+            }
         }
     }
 }
