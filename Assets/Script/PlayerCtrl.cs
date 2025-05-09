@@ -18,10 +18,13 @@ namespace Script
         InputSystem_Actions _inputSystemActions;
         InputAction _moveAction;
         InputAction _lookAction;
-        
+        InputAction _sightOnOffAction;
+
         [SerializeField] private Tilemap blockedTilemap;
         [SerializeField] private float distance = 0.5f;
         [SerializeField] private GameManager gameManager;
+        [SerializeField] private GameObject darkness;
+        [SerializeField] private GameObject sight;
         bool _canMove = true;
         bool _canRotate = true;
 
@@ -31,6 +34,7 @@ namespace Script
             _inputSystemActions.Enable();
             _moveAction = _inputSystemActions.Player.Move;
             _lookAction = _inputSystemActions.Player.Look;
+            _sightOnOffAction = _inputSystemActions.Player.SightOnOff;
         }
 
         private void OnDestroy()
@@ -91,6 +95,12 @@ namespace Script
             if (lookDirection != 0)
             {
                 StartCoroutine(PlayerRotate(lookDirection));
+            }
+
+            if (_sightOnOffAction.triggered)
+            {
+                darkness.SetActive(!darkness.activeSelf);
+                sight.SetActive(!sight.activeSelf);
             }
         }
 

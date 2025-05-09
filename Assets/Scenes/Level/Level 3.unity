@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 230738222}
   - component: {fileID: 230738221}
   m_Layer: 5
-  m_Name: Level 2 Button
+  m_Name: Level 3 Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1326,7 +1326,7 @@ GameObject:
   - component: {fileID: 1109831482}
   - component: {fileID: 1109831481}
   m_Layer: 5
-  m_Name: Level 3 Button
+  m_Name: Level 4 Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4084,6 +4084,16 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 7638713319077624918, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
   m_PrefabInstance: {fileID: 2274785789353909060}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2274785789353909063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8469661230092668210, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
+  m_PrefabInstance: {fileID: 2274785789353909060}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2274785789353909064 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4894733866547706515, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
+  m_PrefabInstance: {fileID: 2274785789353909060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7146778795482884157 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4841863702643771612, guid: 2c412ea654d7151458aaebc36ef2ccb7, type: 3}
@@ -4104,6 +4114,8 @@ MonoBehaviour:
   blockedTilemap: {fileID: 1820089059}
   distance: 1
   gameManager: {fileID: 1749835214}
+  darkness: {fileID: 2274785789353909064}
+  sight: {fileID: 2274785789353909063}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
