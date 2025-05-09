@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Script
 {
@@ -49,6 +48,7 @@ namespace Script
         public void StageClear()
         {
             canvas.gameObject.SetActive(true);
+            KeyboardButtonSelector.Instance.RefreshButtons();
         }
     }
 }

@@ -87,9 +87,14 @@ namespace Script
             if (!hit.collider.IsUnityNull() && hit.collider.CompareTag("exitPoint"))
             {
                 if (GameManager.Instance.AreAllCatsFound())
+                {
                     Debug.Log("clear");
+                    GameManager.Instance.StageClear();
+                }
                 else
+                {
                     SoundManager.Instance.PlaySFX("hit");
+                }
             }
         }
 

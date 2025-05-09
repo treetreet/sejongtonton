@@ -39,7 +39,7 @@ namespace Script
             RefreshButtons();
         }
 
-        private void RefreshButtons()
+        public void RefreshButtons()
         {
             _buttons.Clear();
             _selectedButtonIndex = 0;
@@ -50,7 +50,7 @@ namespace Script
                 foreach (Transform child in buttonGroup)
                 {
                     Button button = child.GetComponent<Button>();
-                    if (button != null)
+                    if (!button.IsUnityNull())
                     {
                         _buttons.Add(button);
                     }
