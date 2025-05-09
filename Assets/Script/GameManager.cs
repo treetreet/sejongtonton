@@ -7,9 +7,10 @@ namespace Script
     public class GameManager : MonoBehaviour
     {
         private readonly List<GameObject> _cats = new List<GameObject>();
-    
+        [SerializeField] List<int> _scaleOrder = new List<int>();
+
         [SerializeField] private Canvas canvas;
-        
+        [SerializeField] List<int> correctScaleOrder;
 
         private void Start()
         {
@@ -31,15 +32,36 @@ namespace Script
                 Debug.Log("NotFindAllCat");
                 if (cat.activeInHierarchy) return false;
             }
-
             return true;
         }
 
-        public void StageClear()
+        public bool AreScaleOrderCorrect()
         {
-            if(canvas.IsUnityNull()) Debug.LogError("canvas is null");
-            else canvas.gameObject.SetActive(true);
-            KeyboardButtonSelector.Instance.RefreshButtons();
+            if(correctScaleOrder.Count == 0)
+                return true;
+            if (correctScaleOrder.Count > _scaleOrder.Count)
+                return false;
+            for (int i = 0; i < correctScaleOrder.Count; i++)
+                if (correctScaleOrder[i] != _scaleOrder[i])
+                    return false;
+            
+            return true;
+        }
+
+        public void AddScaleOrder(int _in)
+        {
+            _scaleOrder.Add(_in);
+        }
+        public bool StageClear()
+        {
+            if (AreAllCatsFound() && AreScaleOrderCorrect())
+            {
+                if (canvas.IsUnityNull()) Debug.LogError("canvas is null");
+                else canvas.gameObject.SetActive(true);
+                KeyboardButtonSelector.Instance.RefreshButtons();
+                return true;
+            }
+            return false;
         }
     }
 }
