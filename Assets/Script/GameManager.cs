@@ -54,6 +54,8 @@ namespace Script
 
         public void AddScaleOrder(int @in)
         {
+            if (scaleOrder.Count == correctScaleOrder.Count)
+                scaleOrder.RemoveAt(0);
             scaleOrder.Add(@in);
         }
         public bool StageClear()
