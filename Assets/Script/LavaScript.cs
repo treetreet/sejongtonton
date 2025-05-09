@@ -17,8 +17,6 @@ namespace Script
 
         void CheckOverlap()
         {
-            Debug.Log("[Lava] CheckOverlap called");
-
             float distance = Vector3.Distance(transform.position, _playerTransform.position);
             Debug.Log("[Lava] Distance to player: " + distance);
 
@@ -29,18 +27,6 @@ namespace Script
             }
         }
 
-
-        
-        private void OnEnable()
-        {
-            PlayerCtrl.OnPlayerMove += CheckOverlap;
-        }
-
-        private void OnDisable()
-        {
-            PlayerCtrl.OnPlayerMove -= CheckOverlap;
-        }
-
         void Start()
         {
             _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -49,6 +35,7 @@ namespace Script
 
         void Update()
         {
+            CheckOverlap();
             StartCoroutine(playSFX());
 
             playingAudio.RemoveAll(a => a == null);
