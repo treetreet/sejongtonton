@@ -15,7 +15,7 @@ public class PlayerCtrl : MonoBehaviour
 
     [SerializeField] Tilemap blockedTilemap;
     bool canMove = true;
-
+    bool canRotate = true;
     void Start()
     {
         inputsystem = new InputSystem_Actions();
@@ -27,6 +27,7 @@ public class PlayerCtrl : MonoBehaviour
     void Update()
     {
         if (!canMove) return;
+        if (!canRotate) return;
 
         Vector2 input = moveAction.ReadValue<Vector2>();
         if (input != Vector2.zero)
@@ -44,7 +45,12 @@ public class PlayerCtrl : MonoBehaviour
             }
 
             Debug.Log(input);
-            Debug.Log(lookAction.ReadValueAsObject());
+        }
+
+        float lookinput = lookAction.ReadValue<float>();
+        if (lookinput != 0)
+        {
+            StartCoroutine(PlayerRotate(lookinput));
         }
     }
 
@@ -56,6 +62,23 @@ public class PlayerCtrl : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
         canMove = true;
+    }
+
+    IEnumerator PlayerRotate(float input)
+    {
+        Debug.Log(transform.eulerAngles);
+        canRotate = false;
+        Vector3 rotateStart = transform.eulerAngles;
+        float rotationtimer = 0f;
+        while (rotationtimer <= 0.5f)
+        {
+            rotationtimer += Time.deltaTime;
+            transform.eulerAngles = Vector3.Lerp(rotateStart, rotateStart + new Vector3(0, 0, input * -90f), rotationtimer * 2f);
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        canRotate = true;
     }
 }
 
