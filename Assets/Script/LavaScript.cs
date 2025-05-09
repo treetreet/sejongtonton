@@ -17,12 +17,19 @@ namespace Script
 
         void CheckOverlap()
         {
-            if(transform.position == _playerTransform.position)
+            Debug.Log("[Lava] CheckOverlap called");
+
+            float distance = Vector3.Distance(transform.position, _playerTransform.position);
+            Debug.Log("[Lava] Distance to player: " + distance);
+
+            if (distance < 0.1f)
             {
-                Debug.Log("Lava");
+                Debug.Log("[Lava] Game Over triggered");
                 _gameManager.GameOver();
             }
         }
+
+
         
         private void OnEnable()
         {
