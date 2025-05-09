@@ -770,8 +770,9 @@ GameObject:
   - component: {fileID: 814519130}
   - component: {fileID: 814519129}
   - component: {fileID: 814519131}
+  - component: {fileID: 814519132}
   m_Layer: 5
-  m_Name: Next Button
+  m_Name: Select Level Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -878,19 +879,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 814519129}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1897049438}
-        m_TargetAssemblyTypeName: Script.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadNewScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Select Level
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &814519132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814519127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950a0d02fd766f34fb225ec9b47dcdf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &912532592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,8 +1146,9 @@ GameObject:
   - component: {fileID: 1500526058}
   - component: {fileID: 1500526057}
   - component: {fileID: 1500526056}
+  - component: {fileID: 1500526060}
   m_Layer: 5
-  m_Name: Back Button
+  m_Name: Select Level Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1195,19 +1197,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1500526057}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1897049438}
-        m_TargetAssemblyTypeName: Script.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadNewScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Select Level
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1500526057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,6 +1256,18 @@ RectTransform:
   m_AnchoredPosition: {x: -334, y: -190.625}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1500526060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500526055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950a0d02fd766f34fb225ec9b47dcdf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1532176482
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,7 +1472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bc7943cd0258746b844181e3ad346b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1802056817}
 --- !u!4 &1749835215
 Transform:
   m_ObjectHideFlags: 0
@@ -1504,7 +1505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1802056814
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2244,6 +2245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockedTilemap: {fileID: 1820089059}
   distance: 1
+  gameManager: {fileID: 1749835214}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

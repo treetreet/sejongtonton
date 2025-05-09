@@ -16,6 +16,7 @@ namespace Script
         
         [SerializeField] private Tilemap blockedTilemap;
         [SerializeField] private float distance = 1f;
+        [SerializeField] private GameManager gameManager;
         bool _canMove = true;
         bool _canRotate = true;
         void Start()
@@ -24,6 +25,15 @@ namespace Script
             _inputSystemActions.Enable();
             _moveAction = _inputSystemActions.Player.Move;
             _lookAction = _inputSystemActions.Player.Look;
+        }
+
+        private void OnDestroy()
+        {
+            if (_inputSystemActions != null)
+            {
+                _inputSystemActions.Disable();
+                _inputSystemActions.Dispose();
+            }
         }
 
         void Update()
@@ -86,14 +96,14 @@ namespace Script
             
             if (!hit.collider.IsUnityNull() && hit.collider.CompareTag("exitPoint"))
             {
-                if (GameManager.Instance.AreAllCatsFound())
+                if (gameManager.AreAllCatsFound())
                 {
                     Debug.Log("clear");
-                    GameManager.Instance.StageClear();
+                    gameManager.StageClear();
                 }
                 else
                 {
-                    SoundManager.Instance.PlaySFX("hit", transform.position);
+                    SoundManager.Instance.PlaySFX("hit");
                 }
             }
         }
