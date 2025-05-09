@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7074566816614534686}
   - component: {fileID: 3095039061027938760}
   - component: {fileID: 4282839342871374205}
+  - component: {fileID: 6202032462799106077}
   m_Layer: 0
   m_Name: exitPoint
   m_TagString: exitPoint
@@ -134,3 +135,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6202032462799106077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4846628022943993315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7e8c4515ac7f74d9574ac6558ee9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playingAudio: []
+  _targetTransform: {fileID: 0}
+  _maxDistance: 3
