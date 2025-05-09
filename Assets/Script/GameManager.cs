@@ -17,12 +17,15 @@ namespace Script
         [SerializeField] private GameObject gameoverPanel;
         [SerializeField] List<int> correctScaleOrder;
         private PlayerCtrl _player;
+        private SoundManager _soundmanager;
         private void Start()
         {
             inputSystem = new InputSystem_Actions();
             inputSystem.Enable();
             _restartAction = inputSystem.Player.Restart;
             Transform catGroup = GameObject.Find("CatGroup")?.transform;
+
+            _soundmanager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
             if (catGroup != null)
             {
                 foreach (Transform child in catGroup)
@@ -83,6 +86,7 @@ namespace Script
             if (gameoverPanel.IsUnityNull()) Debug.LogError("gameoverPanel is null");
             _player.enabled = false;
             gameoverPanel.SetActive(true);
+            _soundmanager.PlaySFX("deadandrestart");
             KeyboardButtonSelector.Instance.RefreshButtons();
         }
 
