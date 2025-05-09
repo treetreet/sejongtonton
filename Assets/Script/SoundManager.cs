@@ -82,7 +82,6 @@ public class SoundManager : MonoBehaviour
             tempSource.clip = clip;
             tempSource.volume = volume;
             tempSource.spatialBlend = 1f;
-            tempSource.minDistance = 100f;
             tempSource.Play();
 
             Destroy(tempGO, clip.length); // 자동 제거
