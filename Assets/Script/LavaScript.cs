@@ -13,23 +13,21 @@ namespace Script
         [SerializeField] float maxDistance;
 
         private GameManager _gameManager;
-        private Transform _playerTransform;
 
         void CheckOverlap()
         {
-            float distance = Vector3.Distance(transform.position, _playerTransform.position);
-            Debug.Log("[Lava] Distance to player: " + distance);
+            float distance = Vector3.Distance(transform.position, targetTransform.position);
 
-            if (distance < 0.1f)
+            if (distance < 0.4f)
             {
                 Debug.Log("[Lava] Game Over triggered");
                 _gameManager.GameOver();
+                this.enabled = false;
             }
         }
 
         void Start()
         {
-            _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
 

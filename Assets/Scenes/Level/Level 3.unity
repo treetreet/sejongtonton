@@ -179,6 +179,10 @@ PrefabInstance:
       propertyPath: _maxDistance
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6660024643866677690, guid: af3355c3a03877147accae2cc32c5cba, type: 3}
+      propertyPath: targetTransform
+      value: 
+      objectReference: {fileID: 2274785789353909061}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -514,6 +518,10 @@ PrefabInstance:
       propertyPath: _maxDistance
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6660024643866677690, guid: af3355c3a03877147accae2cc32c5cba, type: 3}
+      propertyPath: targetTransform
+      value: 
+      objectReference: {fileID: 2274785789353909061}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4022,6 +4030,10 @@ PrefabInstance:
       propertyPath: _maxDistance
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6660024643866677690, guid: af3355c3a03877147accae2cc32c5cba, type: 3}
+      propertyPath: targetTransform
+      value: 
+      objectReference: {fileID: 2274785789353909061}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
