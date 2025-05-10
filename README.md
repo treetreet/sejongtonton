@@ -31,6 +31,6 @@ Hackaton for Sejong Uni. 2025-05-10.
  - 시각장애가 없는 사람들에게 보이지 않는 것의 불편함을 알려주며, 장애인들을 공감할 수 있도록 한다.
  - 나아가 장애에 대한 관심을 제고하여 다름에 대한 이해와 공감이 확산되고, 신체적 불편함을 지닌 이들도 삶의 질을 보장받을 수 있는 국가로의 사회적 발전에 기여한다.
 ## Play Video
-[![프로젝트 시연](썸네일 이미지 url)](영상 url)
+[![프로젝트 시연](https://img.youtube.com/vi/_CgFaqq25Fk/hqdefault.jpg)](https://youtu.be/_CgFaqq25Fk)
 ## Game Play URL
 [소리미로 게임하기](https://play.unity.com/en/games/d9a3cdb0-aad5-42e3-bec6-914f3d5e81af/7iam66asiouvuouhna)
